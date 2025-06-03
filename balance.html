@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আপনার ব্যালেন্স</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif; margin: 0; padding: 0;
+            background-color: #f0f0f0; color: #333;
+        }
+        * { box-sizing: border-box; }
+
+        .hero-section {
+            background-color: #5cb85c; color: #fff;
+            padding: 30px 20px; text-align: center;
+        }
+        .hero-section h1 {
+            margin-top: 0; margin-bottom: 20px; font-size: 2em;
+        }
+        .hero-section nav a {
+            color: #fff; text-decoration: none; margin: 0 15px;
+            font-size: 1.1em; padding: 8px 0; display: inline-block;
+        }
+        .hero-section nav a:hover { text-decoration: underline; }
+
+        .main-container {
+            padding: 20px; max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .card {
+            background-color: #fff; border-radius: 8px;
+            padding: 20px; margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .card h2 {
+            color: #5cb85c; margin-top: 0;
+        }
+        .balance-item {
+            padding: 15px; margin-bottom: 10px;
+            background-color: #e9ecef; border-radius: 5px;
+            font-size: 1.2em; text-align: left;
+        }
+        .balance-item strong { color: #5cb85c; }
+        .total-balance-item {
+            background-color: #5cb85c; color: white; font-weight: bold;
+        }
+        .total-balance-item strong { color: white; }
+
+        .ad-container {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #333; color: #fff; text-align: center;
+            padding: 20px; margin-top: 30px;
+        }
+        footer p { margin: 0; }
+
+        @media (max-width: 600px) {
+            .hero-section h1 { font-size: 1.8em; }
+            .hero-section nav a { margin: 0 8px; font-size: 1em; }
+            .main-container { padding: 15px; }
+            .card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="hero-section">
+        <h1>আপনার ব্যালেন্স</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="referral.html">Referral</a>
+            <a href="balance.html">Balance</a>
+            <a href="task.html">Tasks</a>
+            <a href="withdraw.html">Withdraw</a>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <div class="card">
+            <h2>বর্তমান ব্যালেন্স</h2>
+            <div class="balance-item">
+                রেফারেল আয়: <strong id="referralIncomeDisplay">0</strong> টাকা
+            </div>
+
+            <!-- Ad's 2 (320x50) - Placed between balance items -->
+            <div class="ad-container">
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : 'f141c7918f13b659863f4aa19d491f25',
+                        'format' : 'iframe',
+                        'height' : 50,
+                        'width' : 320,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/f141c7918f13b659863f4aa19d491f25/invoke.js"></script>
+            </div>
+
+            <div class="balance-item">
+                টাস্ক আয়: <strong id="taskIncomeDisplay">0</strong> টাকা
+            </div>
+            <div class="balance-item total-balance-item">
+                মোট আয়: <strong id="totalIncomeDisplay">0</strong> টাকা
+            </div>
+        </div>
+
+        <!-- Ad's 1 (300x250) - Placed after the main balance card -->
+        <div class="ad-container">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : 'b109dc24b4878e2b3c118b74c36165ab',
+                    'format' : 'iframe',
+                    'height' : 250,
+                    'width' : 300,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/b109dc24b4878e2b3c118b74c36165ab/invoke.js"></script>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2023 EarnMoney. All rights reserved.</p>
+    </footer>
+
+    <!-- Ad's 3 - General script -->
+    <script type='text/javascript' src='//pl26761622.profitableratecpm.com/f3/0c/5d/f30c5d36708bcd1192a97bae0808ce5f.js'></script>
+    <!-- Ad's 4 - General script -->
+    <script type='text/javascript' src='//pl26761574.profitableratecpm.com/cf/d6/62/cfd662ebbf8e5c12cacd8843154f4e72.js'></script>
+
+    <script> // Your existing JavaScript
+        function loadData(key) {
+            const data = localStorage.getItem(key);
+            return data ? JSON.parse(data) : initializeUserData();
+        }
+        
+        function initializeUserData() {
+             const defaultData = {
+                invitedByCode: null, myReferralCode: null, referrals: 0,
+                referralIncome: 0, taskIncome: 0, totalIncome: 0,
+                tasksCompletedToday: {}, tasksCompletedCount: 0, lastTaskDate: null, withdrawals: []
+            };
+            localStorage.setItem('userData', JSON.stringify(defaultData));
+            return defaultData;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const userData = loadData('userData'); 
+            
+            document.getElementById('referralIncomeDisplay').textContent = userData.referralIncome || 0;
+            document.getElementById('taskIncomeDisplay').textContent = userData.taskIncome || 0;
+            
+            const totalIncome = (userData.referralIncome || 0) + (userData.taskIncome || 0);
+            document.getElementById('totalIncomeDisplay').textContent = totalIncome;
+
+            if (userData.totalIncome !== totalIncome) {
+                userData.totalIncome = totalIncome;
+                localStorage.setItem('userData', JSON.stringify(userData));
+            }
+        });
+    </script>
+</body>
+</html>

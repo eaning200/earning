@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>টাকা উইথড্র করুন</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif; margin: 0; padding: 0;
+            background-color: #f0f0f0; color: #333;
+        }
+        * { box-sizing: border-box; }
+
+        .hero-section {
+            background-color: #5cb85c; color: #fff;
+            padding: 30px 20px; text-align: center;
+        }
+        .hero-section h1 {
+            margin-top: 0; margin-bottom: 20px; font-size: 2em;
+        }
+        .hero-section nav a {
+            color: #fff; text-decoration: none; margin: 0 15px;
+            font-size: 1.1em; padding: 8px 0; display: inline-block;
+        }
+        .hero-section nav a:hover { text-decoration: underline; }
+
+        .main-container {
+            padding: 20px; max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .card {
+            background-color: #fff; border-radius: 8px;
+            padding: 20px; margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .card h2 {
+            color: #5cb85c; margin-top: 0; text-align: center;
+        }
+
+        #currentBalanceInfo {
+            text-align: center; font-size: 1.2em;
+            margin-bottom: 20px; padding: 10px; background-color: #e9ecef;
+            border-radius: 5px;
+        }
+        #currentBalanceInfo strong { color: #5cb85c; }
+
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input[type="text"], .form-group input[type="number"], .form-group select {
+            width: 100%; 
+            padding: 10px; border: 1px solid #ddd; border-radius: 4px;
+        }
+        button[type="button"] {
+            background-color: #5cb85c; color: white;
+            padding: 12px 20px; border: none; border-radius: 4px;
+            cursor: pointer; font-size: 16px; display: block;
+            width: 100%; margin-top: 10px;
+        }
+        button[type="button"]:hover { background-color: #4cae4c; }
+        button[type="button"]:disabled { background-color: #ccc; cursor: not-allowed; }
+
+        .message {
+            padding: 10px; margin-bottom: 15px; border-radius: 4px;
+            text-align: center;
+        }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .info { background-color: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+
+        .payment-note {
+            text-align:center; margin-top:20px; font-style:italic; color: #666;
+        }
+        
+        .ad-container {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #333; color: #fff; text-align: center;
+            padding: 20px; margin-top: 30px;
+        }
+        footer p { margin: 0; }
+        
+        @media (max-width: 600px) {
+            .hero-section h1 { font-size: 1.8em; }
+            .hero-section nav a { margin: 0 8px; font-size: 1em; }
+            .main-container { padding: 15px; }
+            .card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="hero-section">
+        <h1>টাকা উইথড্র করুন</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="referral.html">Referral</a>
+            <a href="balance.html">Balance</a>
+            <a href="task.html">Tasks</a>
+            <a href="withdraw.html">Withdraw</a>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <div id="messageArea"></div>
+        
+        <div id="currentBalanceInfo">
+            আপনার বর্তমান ব্যালেন্স: <strong id="balanceDisplay">0</strong> টাকা
+        </div>
+
+        <!-- Ad's 2 (320x50) - Placed before withdrawal requirement message -->
+        <div class="ad-container">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : 'f141c7918f13b659863f4aa19d491f25',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/f141c7918f13b659863f4aa19d491f25/invoke.js"></script>
+        </div>
+
+        <div id="withdrawRequirement" class="message info" style="display:none;">
+            উইথড্র করার জন্য আপনার কমপক্ষে <strong id="minReferralsRequired">10</strong> টি রেফারেল প্রয়োজন। আপনার আছে: <span id="userReferralsCount">0</span> টি।
+        </div>
+
+        <div class="card" id="withdrawFormCard"> <!-- Added ID to control visibility of this card -->
+            <h2>উইথড্র ফর্ম</h2>
+            <form id="withdrawForm" style="display:none;">
+                <div class="form-group">
+                    <label for="withdrawAmount">উইথড্র পরিমাণ (টাকা):</label>
+                    <input type="number" id="withdrawAmount" placeholder="কত টাকা তুলবেন" min="1">
+                </div>
+                <div class="form-group">
+                    <label for="paymentMethod">পেমেন্ট মাধ্যম:</label>
+                    <select id="paymentMethod">
+                        <option value="bkash">বিকাশ</option>
+                        <option value="nagad">নগদ</option>
+                        <option value="rocket">রকেট</option>
+                        <option value="binance">BINANCE (USDT TRC20)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="accountDetails">একাউন্ট নম্বর / Binance এড্রেস:</label>
+                    <input type="text" id="accountDetails" placeholder="আপনার একাউন্ট নম্বর বা এড্রেস">
+                </div>
+                <button type="button" onclick="processWithdrawal()">উইথড্র রিকোয়েস্ট পাঠান</button>
+            </form>
+        </div>
+
+        <!-- Ad's 1 (300x250) - Placed after the withdrawal form card -->
+         <div class="ad-container" id="adContainerWithdrawForm" style="display:none;"> <!-- Initially hidden, shown when form is shown -->
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : 'b109dc24b4878e2b3c118b74c36165ab',
+                    'format' : 'iframe',
+                    'height' : 250,
+                    'width' : 300,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/b109dc24b4878e2b3c118b74c36165ab/invoke.js"></script>
+        </div>
+
+         <p class="payment-note">উইথড্র রিকোয়েস্ট সাবমিট করার ৩০ মিনিটের মধ্যে পেমেন্ট করা হবে।</p>
+    </div>
+
+    <footer>
+        <p>© 2023 EarnMoney. All rights reserved.</p>
+    </footer>
+
+    <!-- Ad's 3 - General script -->
+    <script type='text/javascript' src='//pl26761622.profitableratecpm.com/f3/0c/5d/f30c5d36708bcd1192a97bae0808ce5f.js'></script>
+    <!-- Ad's 4 - General script -->
+    <script type='text/javascript' src='//pl26761574.profitableratecpm.com/cf/d6/62/cfd662ebbf8e5c12cacd8843154f4e72.js'></script>
+
+    <script> // Your existing JavaScript
+        const MIN_REFERRALS_FOR_WITHDRAWAL = 10;
+
+        function loadData(key) {
+            const data = localStorage.getItem(key);
+            return data ? JSON.parse(data) : initializeUserData();
+        }
+        function saveData(key, value) {
+            localStorage.setItem(key, JSON.stringify(value));
+        }
+        function initializeUserData() {
+            const defaultData = {
+                invitedByCode: null, myReferralCode: null, referrals: 0,
+                referralIncome: 0, taskIncome: 0, totalIncome: 0,
+                tasksCompletedToday: {}, tasksCompletedCount: 0, lastTaskDate: null, withdrawals: []
+            };
+            saveData('userData', defaultData);
+            return defaultData;
+        }
+
+        let userData = loadData('userData');
+
+        function displayMessage(message, type = 'success') {
+            const messageArea = document.getElementById('messageArea');
+            messageArea.innerHTML = `<div class="message ${type}">${message}</div>`;
+             if (type !== 'info' && type !== 'error') { 
+                 setTimeout(() => { messageArea.innerHTML = ''; }, 5000);
+             }
+        }
+
+        function checkWithdrawalEligibility() {
+            userData.totalIncome = (userData.referralIncome || 0) + (userData.taskIncome || 0);
+            saveData('userData', userData); 
+
+            document.getElementById('balanceDisplay').textContent = userData.totalIncome;
+            
+            const withdrawRequirementEl = document.getElementById('withdrawRequirement');
+            const withdrawFormEl = document.getElementById('withdrawForm');
+            const withdrawFormCardEl = document.getElementById('withdrawFormCard');
+            const adContainerAfterForm = document.getElementById('adContainerWithdrawForm');
+
+
+            document.getElementById('minReferralsRequired').textContent = MIN_REFERRALS_FOR_WITHDRAWAL;
+            document.getElementById('userReferralsCount').textContent = userData.referrals || 0;
+            
+            if ((userData.referrals || 0) >= MIN_REFERRALS_FOR_WITHDRAWAL) {
+                withdrawRequirementEl.style.display = 'none';
+                withdrawFormEl.style.display = 'block';
+                withdrawFormCardEl.style.display = 'block'; // Show the card containing the form
+                adContainerAfterForm.style.display = 'block'; // Show the ad after the form
+            } else {
+                withdrawRequirementEl.style.display = 'block';
+                withdrawFormEl.style.display = 'none';
+                withdrawFormCardEl.style.display = 'none'; // Hide the card containing the form
+                adContainerAfterForm.style.display = 'none'; // Hide the ad after the form
+                displayMessage(`উইথড্র করার জন্য আপনার আরও ${MIN_REFERRALS_FOR_WITHDRAWAL - (userData.referrals || 0)} টি রেফারেল প্রয়োজন।`, 'info');
+            }
+        }
+
+        function processWithdrawal() {
+            const amount = parseFloat(document.getElementById('withdrawAmount').value);
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            const accountDetails = document.getElementById('accountDetails').value.trim();
+
+            if (isNaN(amount) || amount <= 0) {
+                displayMessage('দয়া করে সঠিক পরিমাণ লিখুন।', 'error');
+                return;
+            }
+            if (amount > userData.totalIncome) {
+                displayMessage('আপনার একাউন্টে পর্যাপ্ত ব্যালেন্স নেই।', 'error');
+                return;
+            }
+            if (!accountDetails) {
+                displayMessage('দয়া করে আপনার একাউন্ট নম্বর বা এড্রেস দিন।', 'error');
+                return;
+            }
+
+            userData.totalIncome -= amount;
+            
+            const withdrawalRecord = {
+                amount: amount, method: paymentMethod, account: accountDetails,
+                date: new Date().toISOString(), status: 'Pending'
+            };
+            if (!userData.withdrawals) userData.withdrawals = [];
+            userData.withdrawals.push(withdrawalRecord);
+
+            saveData('userData', userData);
+
+            displayMessage(`আপনার ${amount} টাকার উইথড্র রিকোয়েস্ট (${paymentMethod} - ${accountDetails}) সফলভাবে সাবমিট করা হয়েছে। ৩০ মিনিটের মধ্যে পেমেন্ট করা হবে।`, 'success');
+            
+            document.getElementById('withdrawForm').reset();
+            document.getElementById('balanceDisplay').textContent = userData.totalIncome;
+
+            const withdrawButton = document.querySelector('#withdrawForm button');
+            withdrawButton.disabled = true;
+            setTimeout(() => {
+                 withdrawButton.disabled = false;
+                 checkWithdrawalEligibility(); 
+            }, 3000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!loadData('userData')) { 
+                initializeUserData();
+                userData = loadData('userData');
+            }
+            checkWithdrawalEligibility();
+        });
+    </script>
+</body>
+</html>

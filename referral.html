@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>রেফারেল সিস্টেম</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif; margin: 0; padding: 0;
+            background-color: #f0f0f0; color: #333;
+        }
+        * { box-sizing: border-box; }
+
+        .hero-section {
+            background-color: #5cb85c; color: #fff;
+            padding: 30px 20px; text-align: center;
+        }
+        .hero-section h1 {
+            margin-top: 0; margin-bottom: 20px; font-size: 2em;
+        }
+        .hero-section nav a {
+            color: #fff; text-decoration: none; margin: 0 15px;
+            font-size: 1.1em; padding: 8px 0; display: inline-block;
+        }
+        .hero-section nav a:hover { text-decoration: underline; }
+
+        .main-container {
+            padding: 20px; max-width: 700px;
+            margin: 20px auto;
+        }
+
+        .card {
+            background-color: #fff; border-radius: 8px;
+            padding: 20px; margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .card h2 {
+            color: #5cb85c; margin-top: 0; text-align: center;
+        }
+
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input[type="text"] {
+            width: calc(100% - 22px); padding: 10px;
+            border: 1px solid #ddd; border-radius: 4px;
+        }
+        button {
+            background-color: #5cb85c; color: white;
+            padding: 10px 20px; border: none; border-radius: 4px;
+            cursor: pointer; font-size: 16px; display: block;
+            width: 100%; margin-top: 10px;
+        }
+        button:hover { background-color: #4cae4c; }
+
+        #myReferralCodeDisplay p, #referralStats p {
+            font-size: 1.1em; margin: 10px 0;
+        }
+        #myReferralCodeDisplay strong { color: #337ab7; }
+
+        .message {
+            padding: 10px; margin-bottom: 15px; border-radius: 4px;
+            text-align: center;
+        }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+
+        .ad-container {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #333; color: #fff; text-align: center;
+            padding: 20px; margin-top: 30px;
+        }
+        footer p { margin: 0; }
+
+        @media (max-width: 600px) {
+            .hero-section h1 { font-size: 1.8em; }
+            .hero-section nav a { margin: 0 8px; font-size: 1em; }
+            .main-container { padding: 15px; }
+            .card { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="hero-section">
+        <h1>রেফারেল সিস্টেম</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="referral.html">Referral</a>
+            <a href="balance.html">Balance</a>
+            <a href="task.html">Tasks</a>
+            <a href="withdraw.html">Withdraw</a>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <div id="messageArea"></div>
+
+        <div class="card" id="inviteReferralSection">
+            <h2>ইনভাইট রেফারেল কোড যোগ করুন</h2>
+            <div class="form-group">
+                <label for="inviteCode">ইনভাইট কোড:</label>
+                <input type="text" id="inviteCode" placeholder="বন্ধুর রেফারেল কোড দিন">
+            </div>
+            <button onclick="addInviteCode()">ইনভাইট কোড যোগ করুন</button>
+        </div>
+
+        <!-- Ad's 1 (300x250) - Placed after invite section or if it's hidden, it will be prominent -->
+        <div class="ad-container" id="adContainer1">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : 'b109dc24b4878e2b3c118b74c36165ab',
+                    'format' : 'iframe',
+                    'height' : 250,
+                    'width' : 300,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/b109dc24b4878e2b3c118b74c36165ab/invoke.js"></script>
+        </div>
+
+        <div class="card" id="myReferralCodeDisplay" style="display:none;">
+            <h2>আপনার রেফারেল কোড</h2>
+            <p>আপনার বন্ধুদের এই কোডটি শেয়ার করুন: <strong id="userReferralCode"></strong></p>
+            <button onclick="copyReferralCode()">কোড কপি করুন</button>
+        </div>
+
+        <!-- Ad's 2 (320x50) - Placed after user's referral code display -->
+        <div class="ad-container" id="adContainer2" style="display:none;"> <!-- Initially hidden, shown when myReferralCodeDisplay is shown -->
+             <script type="text/javascript">
+                atOptions = {
+                    'key' : 'f141c7918f13b659863f4aa19d491f25',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/f141c7918f13b659863f4aa19d491f25/invoke.js"></script>
+        </div>
+
+
+        <div class="card" id="referralStats">
+            <h2>আপনার রেফারেল পরিসংখ্যান</h2>
+            <p>মোট সফল রেফারেল: <span id="totalReferrals">0</span> জন</p>
+            <p>রেফারেল থেকে আয়: <span id="referralIncome">0</span> টাকা</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2023 EarnMoney. All rights reserved.</p>
+    </footer>
+
+    <!-- Ad's 3 - General script -->
+    <script type='text/javascript' src='//pl26761622.profitableratecpm.com/f3/0c/5d/f30c5d36708bcd1192a97bae0808ce5f.js'></script>
+    <!-- Ad's 4 - General script -->
+    <script type='text/javascript' src='//pl26761574.profitableratecpm.com/cf/d6/62/cfd662ebbf8e5c12cacd8843154f4e72.js'></script>
+
+    <script> // Your existing JavaScript
+        const INVITE_REFERRAL_BONUS = 0;
+        const PER_REFERRAL_EARNING = 100;
+
+        function loadData(key) {
+            const data = localStorage.getItem(key);
+            return data ? JSON.parse(data) : initializeUserData();
+        }
+
+        function saveData(key, value) {
+            localStorage.setItem(key, JSON.stringify(value));
+        }
+        
+        function initializeUserData() {
+            const defaultData = {
+                invitedByCode: null, myReferralCode: null, referrals: 0,
+                referralIncome: 0, taskIncome: 0, totalIncome: 0,
+                tasksCompletedToday: {}, tasksCompletedCount: 0, lastTaskDate: null, withdrawals: []
+            };
+            saveData('userData', defaultData);
+            return defaultData;
+        }
+
+        let userData = loadData('userData');
+
+        function generateUserReferralCode() {
+            return 'REF' + Math.random().toString(36).substr(2, 8).toUpperCase();
+        }
+
+        function displayMessage(message, type = 'success') {
+            const messageArea = document.getElementById('messageArea');
+            messageArea.innerHTML = `<div class="message ${type}">${message}</div>`;
+            setTimeout(() => { messageArea.innerHTML = ''; }, 3000);
+        }
+
+        function addInviteCode() {
+            const inviteCodeInput = document.getElementById('inviteCode');
+            const enteredCode = inviteCodeInput.value.trim();
+
+            if (!enteredCode) {
+                displayMessage('দয়া করে একটি ইনভাইট কোড দিন।', 'error');
+                return;
+            }
+
+            if (userData.myReferralCode) {
+                displayMessage('আপনি ইতিমধ্যেই একটি কোড তৈরি করেছেন বা ইনভাইট কোড ব্যবহার করেছেন।', 'error');
+                return;
+            }
+            
+            userData.invitedByCode = enteredCode;
+            userData.myReferralCode = generateUserReferralCode();
+            
+            saveData('userData', userData);
+            displayMessage(`ইনভাইট কোড "${enteredCode}" সফলভাবে যোগ করা হয়েছে। আপনার রেফারেল কোড তৈরি হয়েছে।`, 'success');
+            updateReferralDisplay();
+            inviteCodeInput.value = '';
+            // document.getElementById('inviteReferralSection').style.display = 'none'; // Handled in updateReferralDisplay
+        }
+
+        function updateReferralDisplay() {
+            const inviteSection = document.getElementById('inviteReferralSection');
+            const myCodeDisplay = document.getElementById('myReferralCodeDisplay');
+            const adContainer1 = document.getElementById('adContainer1');
+            const adContainer2 = document.getElementById('adContainer2');
+
+
+            if (userData.myReferralCode) {
+                document.getElementById('userReferralCode').textContent = userData.myReferralCode;
+                myCodeDisplay.style.display = 'block';
+                inviteSection.style.display = 'none';
+                adContainer1.style.display = 'none'; // Hide ad 1 if invite section is hidden
+                adContainer2.style.display = 'block'; // Show ad 2
+
+            } else {
+                myCodeDisplay.style.display = 'none';
+                inviteSection.style.display = 'block';
+                adContainer1.style.display = 'block'; // Show ad 1 if invite section is visible
+                adContainer2.style.display = 'none'; // Hide ad 2
+            }
+            document.getElementById('totalReferrals').textContent = userData.referrals;
+            document.getElementById('referralIncome').textContent = userData.referralIncome;
+        }
+
+        function copyReferralCode() {
+            const code = document.getElementById('userReferralCode').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                displayMessage('রেফারেল কোড কপি করা হয়েছে!', 'success');
+            }).catch(err => {
+                displayMessage('কোড কপি করতে সমস্যা হয়েছে।', 'error');
+            });
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!loadData('userData')) { 
+                initializeUserData();
+                userData = loadData('userData');
+            }
+            updateReferralDisplay();
+        });
+    </script>
+</body>
+</html>

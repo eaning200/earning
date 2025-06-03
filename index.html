@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="bn"> <!-- ভাষা 'bn' রাখতে পারেন, অথবা 'en' যদি কন্টেন্ট মূলত ইংরেজি হয় -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Earn Money</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0; /* Light grey background */
+            color: #333;
+        }
+        * {
+            box-sizing: border-box;
+        }
+
+        .hero-section {
+            background-color: #5cb85c; /* Green color from image */
+            color: #fff;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .hero-section h1 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+        .hero-section nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1.1em;
+            padding: 8px 0; /* Added padding for better touch targets */
+            display: inline-block; /* Ensures padding is applied correctly */
+        }
+        .hero-section nav a:hover {
+            text-decoration: underline;
+        }
+
+        .main-container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto; /* Center the content */
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .earn-online-card h2 {
+            color: #5cb85c; /* Green heading */
+            margin-top: 0;
+        }
+
+        .stats-section {
+            display: flex;
+            gap: 20px; /* Space between stat cards */
+            margin-bottom: 20px;
+        }
+        .stat-card {
+            flex: 1; /* Each card takes equal space */
+            padding: 15px;
+            margin-bottom: 0; /* Removed bottom margin as stats-section has it */
+        }
+        .stat-card h3 {
+            color: #5cb85c;
+            margin-top: 0;
+            margin-bottom: 5px;
+            font-size: 1.2em;
+        }
+        .stat-card .stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+        }
+
+        .how-it-works-section h2 {
+            color: #5cb85c;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .step-card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            text-align: left;
+        }
+        .step-number {
+            background-color: #5cb85c;
+            color: #fff;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+        .step-card div h4 {
+            margin: 0 0 5px 0;
+            color: #333;
+        }
+        .step-card div p {
+            margin: 0;
+            color: #555;
+            font-size: 0.9em;
+        }
+
+        #welcomeMessage {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px; /* Add some space before footer */
+        }
+        footer p {
+            margin: 0;
+        }
+
+        /* Ad container styling (optional, adjust as needed) */
+        .ad-container {
+            margin: 20px auto; /* Center ad if it's block */
+            text-align: center; /* Center ad if it's inline-block */
+            /* You might need to set specific dimensions if the ad script doesn't */
+        }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .hero-section h1 {
+                font-size: 2em;
+            }
+            .hero-section nav a {
+                margin: 0 8px; /* Smaller margin for nav links */
+                font-size: 1em;
+            }
+            .stats-section {
+                flex-direction: column; /* Stack stat cards on smaller screens */
+            }
+            .stat-card {
+                margin-bottom: 20px; /* Add margin back when stacked */
+            }
+            .main-container {
+                padding: 15px;
+            }
+            .card, .step-card {
+                padding: 15px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="hero-section">
+        <h1>Welcome to EarnMoney</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="referral.html">Referral</a>
+            <a href="balance.html">Balance</a>
+            <a href="task.html">Tasks</a>
+            <a href="withdraw.html">Withdraw</a>
+        </nav>
+    </div>
+
+    <div class="main-container">
+        <section class="card earn-online-card">
+            <h2>Earn Money Online</h2>
+            <p>Complete simple tasks and invite friends to earn money daily!</p>
+        </section>
+
+        <!-- Ad's 1 (300x250) -->
+        <div class="ad-container">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : 'b109dc24b4878e2b3c118b74c36165ab',
+                    'format' : 'iframe',
+                    'height' : 250,
+                    'width' : 300,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/b109dc24b4878e2b3c118b74c36165ab/invoke.js"></script>
+        </div>
+
+        <section class="stats-section">
+            <div class="card stat-card">
+                <h3>Total Users</h3>
+                <p class="stat-value">10,245</p> <!-- Example static value -->
+            </div>
+            <div class="card stat-card">
+                <h3>Total Paid</h3>
+                <p class="stat-value">৳1,245,780</p> <!-- Example static value -->
+            </div>
+        </section>
+
+        <!-- Ad's 2 (320x50) -->
+        <div class="ad-container">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : 'f141c7918f13b659863f4aa19d491f25',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/f141c7918f13b659863f4aa19d491f25/invoke.js"></script>
+        </div>
+
+        <section class="how-it-works-section">
+            <h2>How It Works</h2>
+            <div class="step-card">
+                <span class="step-number">1</span>
+                <div>
+                    <h4>Sign Up</h4>
+                    <p>Create your free account</p>
+                </div>
+            </div>
+            <div class="step-card">
+                <span class="step-number">2</span>
+                <div>
+                    <h4>Invite Friends</h4>
+                    <p>Earn ৳100 per referral</p>
+                </div>
+            </div>
+            <div class="step-card">
+                <span class="step-number">3</span>
+                <div>
+                    <h4>Complete Tasks</h4>
+                    <p>Earn ৳10 per task</p>
+                </div>
+            </div>
+            <div class="step-card">
+                <span class="step-number">4</span>
+                <div>
+                    <h4>Withdraw</h4>
+                    <p>Get paid to bKash, Nagad or Binance</p>
+                </div>
+            </div>
+        </section>
+
+        <p id="welcomeMessage"></p> <!-- Existing welcome message element -->
+    </div>
+
+    <footer>
+        <p>© 2023 EarnMoney. All rights reserved.</p>
+    </footer>
+
+    <!-- Ad's 3 - General script, good to place before </body> -->
+    <script type='text/javascript' src='//pl26761622.profitableratecpm.com/f3/0c/5d/f30c5d36708bcd1192a97bae0808ce5f.js'></script>
+
+    <!-- Ad's 4 - General script, good to place before </body> -->
+    <script type='text/javascript' src='//pl26761574.profitableratecpm.com/cf/d6/62/cfd662ebbf8e5c12cacd8843154f4e72.js'></script>
+
+    <script> // Your existing JavaScript for localStorage etc.
+        // localStorage থেকে ডেটা লোড করার ফাংশন
+        function loadData(key) {
+            const data = localStorage.getItem(key);
+            return data ? JSON.parse(data) : null;
+        }
+
+        // localStorage-এ ডেটা সেভ করার ফাংশন
+        function saveData(key, value) {
+            localStorage.setItem(key, JSON.stringify(value));
+        }
+        
+        function initializeDefaultData() {
+             return {
+                invitedByCode: null,
+                myReferralCode: null,
+                referrals: 0,
+                referralIncome: 0,
+                taskIncome: 0,
+                totalIncome: 0,
+                tasksCompletedToday: {}, 
+                tasksCompletedCount: 0, 
+                lastTaskDate: null,     
+                withdrawals: []
+            };
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            let userData = loadData('userData');
+
+            if (!userData) {
+                userData = initializeDefaultData();
+                saveData('userData', userData);
+            }
+            
+            if (userData.tasksCompletedToday === undefined) {
+                userData.tasksCompletedToday = {};
+            }
+            if (userData.tasksCompletedCount === undefined) {
+                userData.tasksCompletedCount = 0;
+            }
+            saveData('userData', userData); 
+
+            const welcomeMessageEl = document.getElementById('welcomeMessage');
+            if (userData.myReferralCode) {
+                welcomeMessageEl.textContent = `আপনার রেফারেল কোড: ${userData.myReferralCode}`;
+            } else {
+                welcomeMessageEl.textContent = 'রেফারেল সেকশনে গিয়ে আপনার কোড জেনারেট করুন অথবা ইনভাইট কোড ব্যবহার করুন।';
+            }
+        });
+    </script>
+</body>
+</html>

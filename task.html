@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>দৈনিক টাস্ক</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif; margin: 0; padding: 0;
+            background-color: #f0f0f0; color: #333;
+        }
+        * { box-sizing: border-box; }
+
+        .hero-section {
+            background-color: #5cb85c; color: #fff;
+            padding: 30px 20px; text-align: center;
+        }
+        .hero-section h1 {
+            margin-top: 0; margin-bottom: 20px; font-size: 2em;
+        }
+        .hero-section nav a {
+            color: #fff; text-decoration: none; margin: 0 15px;
+            font-size: 1.1em; padding: 8px 0; display: inline-block;
+        }
+        .hero-section nav a:hover { text-decoration: underline; }
+
+        .main-container {
+            padding: 20px; max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .card { 
+            background-color: #fff; border-radius: 8px;
+            padding: 20px; margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .task-info-header { 
+            text-align: center; font-size: 1.2em; color: #5cb85c;
+            margin-bottom: 20px; padding: 10px; background-color: #e9ecef;
+            border-radius: 5px;
+        }
+
+        .task-list { list-style: none; padding: 0; }
+        .task-item {
+            background-color: #fff; border: 1px solid #ddd;
+            padding: 15px; margin-bottom: 10px; border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            display: flex; flex-direction: column; 
+            gap: 10px; 
+        }
+        .task-item-description { flex-grow: 1; margin-bottom: 10px;}
+        .task-item-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+        .task-item.completed { background-color: #e6ffe6; border-left: 5px solid #5cb85c;}
+        .task-item.completed .task-item-description { text-decoration: line-through; }
+        
+        .task-item button, .task-item .screenshot-upload label {
+            background-color: #5cb85c; color: white;
+            padding: 8px 12px; border: none; border-radius: 4px;
+            cursor: pointer; font-size: 0.9em;
+        }
+        .task-item button:hover, .task-item .screenshot-upload label:hover { background-color: #4cae4c; }
+        .task-item button:disabled { background-color: #ccc; cursor: not-allowed; }
+        
+        .task-item .screenshot-upload input[type="file"] { display: none; }
+        .task-item .screenshot-upload label { background-color: #f0ad4e; } 
+        .task-item .screenshot-upload label:hover { background-color: #ec971f; }
+        .task-item .completed-text { font-weight: bold; color: #5cb85c; }
+
+        .message {
+            padding: 10px; margin-bottom: 15px; border-radius: 4px;
+            text-align: center;
+        }
+        .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+
+        .ad-container {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        footer {
+            background-color: #333; color: #fff; text-align: center;
+            padding: 20px; margin-top: 30px;
+        }
+        footer p { margin: 0; }
+
+        @media (max-width: 600px) {
+            .hero-section h1 { font-size: 1.8em; }
+            .hero-section nav a { margin: 0 8px; font-size: 1em; }
+            .main-container { padding: 15px; }
+            .task-item-actions { flex-direction: column; align-items: stretch; }
+            .task-item-actions button, .task-item-actions label { width: 100%; margin-bottom: 5px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="hero-section">
+        <h1>দৈনিক টাস্ক</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="referral.html">Referral</a>
+            <a href="balance.html">Balance</a>
+            <a href="task.html">Tasks</a>
+            <a href="withdraw.html">Withdraw</a>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <div id="messageArea"></div>
+
+        <!-- Ad's 2 (320x50) - Placed before task info header -->
+        <div class="ad-container">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : 'f141c7918f13b659863f4aa19d491f25',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/f141c7918f13b659863f4aa19d491f25/invoke.js"></script>
+        </div>
+
+        <div class="task-info-header">
+            আজকে সম্পন্ন করা টাস্ক: <span id="tasksCompletedCount">0</span>/10
+        </div>
+        <ul id="taskList" class="task-list">
+            <!-- টাস্কগুলো এখানে জাভাস্ক্রিপ্ট দিয়ে তৈরি হবে -->
+        </ul>
+
+        <!-- Ad's 1 (300x250) - Placed after task list -->
+        <div class="ad-container">
+            <script type="text/javascript">
+                atOptions = {
+                    'key' : 'b109dc24b4878e2b3c118b74c36165ab',
+                    'format' : 'iframe',
+                    'height' : 250,
+                    'width' : 300,
+                    'params' : {}
+                };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/b109dc24b4878e2b3c118b74c36165ab/invoke.js"></script>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2023 EarnMoney. All rights reserved.</p>
+    </footer>
+
+    <!-- Ad's 3 - General script -->
+    <script type='text/javascript' src='//pl26761622.profitableratecpm.com/f3/0c/5d/f30c5d36708bcd1192a97bae0808ce5f.js'></script>
+    <!-- Ad's 4 - General script -->
+    <script type='text/javascript' src='//pl26761574.profitableratecpm.com/cf/d6/62/cfd662ebbf8e5c12cacd8843154f4e72.js'></script>
+
+    <script>
+        const TOTAL_DAILY_TASKS = 10;
+        const PER_TASK_EARNING = 10;
+
+        // Your task URLs
+        const taskUrls = [
+            "https://animeblog0001.blogspot.com/2025/05/tokyo-ghoul.html", // Task 1
+            "https://animeblog0001.blogspot.com/2025/05/tokyo-revenger-bys.html", // Task 2
+            "https://animeblog0001.blogspot.com/2025/05/the-worlds-finest-assassin-gets.html", // Task 3
+            "https://animeblog0001.blogspot.com/2025/05/that-time-i-got-reincarnated-as-slime.html", // Task 4
+            "https://hollywoodmovie9x.blogspot.com/2025/05/hollywood-movies.html", // Task 5
+            "https://hollywoodmovie9x.blogspot.com/2025/05/a-mind-blowing-masterpiece-from.html", // Task 6
+            "https://hollywoodmovie9x.blogspot.com/2025/05/spider-man-across-spider-verse-2023.html", // Task 7
+            "https://hollywoodmovie9x.blogspot.com/2025/05/john-wick-chapter-4.html", // Task 8
+            "https://hollywoodmovie9x.blogspot.com/2025/05/aladdin-2019-magical.html", // Task 9
+            "https://hollywoodmovie9x.blogspot.com/2025/05/spider-man-no-way-home.html" // Task 10
+        ];
+
+
+        function loadData(key) {
+            const data = localStorage.getItem(key);
+            return data ? JSON.parse(data) : initializeUserData();
+        }
+        function saveData(key, value) {
+            localStorage.setItem(key, JSON.stringify(value));
+        }
+        function initializeUserData() {
+            const defaultData = {
+                invitedByCode: null, myReferralCode: null, referrals: 0,
+                referralIncome: 0, taskIncome: 0, totalIncome: 0,
+                tasksCompletedToday: {}, tasksCompletedCount: 0, lastTaskDate: null, withdrawals: []
+            };
+            saveData('userData', defaultData);
+            return defaultData;
+        }
+
+        let userData = loadData('userData');
+
+        function displayMessage(message, type = 'success') {
+            const messageArea = document.getElementById('messageArea');
+            messageArea.innerHTML = `<div class="message ${type}">${message}</div>`;
+            setTimeout(() => { messageArea.innerHTML = ''; }, 3000);
+        }
+
+        function resetDailyTasksIfNeeded() {
+            const today = new Date().toDateString();
+            if (userData.lastTaskDate !== today) {
+                userData.tasksCompletedToday = {};
+                userData.tasksCompletedCount = 0;
+                userData.lastTaskDate = today;
+                saveData('userData', userData);
+            }
+        }
+
+        function renderTasks() {
+            resetDailyTasksIfNeeded(); 
+
+            const taskListEl = document.getElementById('taskList');
+            taskListEl.innerHTML = ''; 
+
+            document.getElementById('tasksCompletedCount').textContent = `${userData.tasksCompletedCount}/${TOTAL_DAILY_TASKS}`;
+
+            for (let i = 1; i <= TOTAL_DAILY_TASKS; i++) {
+                const taskId = `task${i}`;
+                const li = document.createElement('li');
+                li.classList.add('task-item');
+                li.id = `task-item-${i}`;
+
+                const isCompleted = userData.tasksCompletedToday[taskId];
+
+                if (isCompleted) {
+                    li.classList.add('completed');
+                }
+
+                li.innerHTML = `
+                    <div class="task-item-description">টাস্ক ${i}: (${taskUrls[i-1].substring(0,30)}...) ওয়েবসাইটে যান এবং "Download" বাটনের স্ক্রিনশট নিন</div>
+                    <div class="task-item-actions">
+                        <button onclick="visitTaskSite(${i})" ${isCompleted ? 'disabled' : ''}>সাইটে যান</button>
+                        <span class="screenshot-upload">
+                           <label for="screenshot-${i}" id="label-screenshot-${i}" style="${isCompleted ? 'display:none;' : ''}">স্ক্রিনশট আপলোড</label>
+                           <input type="file" id="screenshot-${i}" accept="image/*" onchange="handleScreenshotUpload(${i})" ${isCompleted ? 'disabled' : ''}>
+                        </span>
+                        <button id="submit-task-${i}" onclick="completeTask(${i})" style="display:none;" ${isCompleted ? 'disabled' : ''}>সাবমিট করুন</button>
+                        ${isCompleted ? '<span class="completed-text">সম্পন্ন</span>' : ''}
+                    </div>
+                `;
+                taskListEl.appendChild(li);
+            }
+        }
+
+        function visitTaskSite(taskNumber) {
+            // taskNumber is 1-based, array is 0-based
+            const urlToVisit = taskUrls[taskNumber - 1];
+            if (urlToVisit) {
+                window.open(urlToVisit, '_blank');
+                displayMessage(`টাস্ক ${taskNumber}: ওয়েবসাইটটি একটি নতুন ট্যাবে খোলা হয়েছে। "Download" বাটন খুঁজে স্ক্রিনশট নিন এবং আপলোড করুন।`, 'success');
+            } else {
+                displayMessage(`টাস্ক ${taskNumber} এর জন্য কোনো লিঙ্ক পাওয়া যায়নি।`, 'error');
+            }
+        }
+
+        function handleScreenshotUpload(taskNumber) {
+            const fileInput = document.getElementById(`screenshot-${taskNumber}`);
+            const submitButton = document.getElementById(`submit-task-${taskNumber}`);
+            const labelElement = document.getElementById(`label-screenshot-${taskNumber}`);
+            
+            if (fileInput.files.length > 0) {
+                submitButton.style.display = 'inline-block';
+                labelElement.textContent = "ফাইল সিলেক্টেড";
+                displayMessage(`টাস্ক ${taskNumber}: স্ক্রিনশট "${fileInput.files[0].name}" সিলেক্ট করা হয়েছে। এবার "সাবমিট করুন"।`, 'success');
+            } else {
+                submitButton.style.display = 'none';
+                labelElement.textContent = "স্ক্রিনশট আপলোড";
+            }
+        }
+
+        function completeTask(taskNumber) {
+            const taskId = `task${taskNumber}`;
+            const fileInput = document.getElementById(`screenshot-${taskNumber}`);
+
+            if (userData.tasksCompletedCount >= TOTAL_DAILY_TASKS) {
+                displayMessage('আপনি আজকের জন্য সব টাস্ক সম্পন্ন করেছেন।', 'error');
+                return;
+            }
+
+            if (userData.tasksCompletedToday[taskId]) {
+                displayMessage(`টাস্ক ${taskNumber} ইতিমধ্যে সম্পন্ন হয়েছে।`, 'error'); // Corrected typo
+                return;
+            }
+            
+            if (fileInput.files.length === 0) {
+                 displayMessage('দয়া করে প্রথমে একটি স্ক্রিনশট আপলোড করুন।', 'error');
+                 return;
+            }
+
+            userData.tasksCompletedToday[taskId] = true;
+            userData.tasksCompletedCount += 1;
+            userData.taskIncome += PER_TASK_EARNING;
+            userData.totalIncome = (userData.referralIncome || 0) + (userData.taskIncome || 0);
+            
+            saveData('userData', userData);
+
+            displayMessage(`টাস্ক ${taskNumber} সফলভাবে সম্পন্ন হয়েছে! আপনি ${PER_TASK_EARNING} টাকা পেয়েছেন।`, 'success');
+            renderTasks(); 
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!loadData('userData')) { 
+                initializeUserData();
+                userData = loadData('userData');
+            }
+            renderTasks();
+        });
+    </script>
+</body>
+</html>
